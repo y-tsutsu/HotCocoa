@@ -9,6 +9,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Media;
 
 namespace HotCocoa
 {
@@ -39,7 +40,9 @@ namespace HotCocoa
                 if (this.ws == null) { return; }
                 if (this.ws.State != WebSocketState.Open) { return; }
 
-                var buff = new ArraySegment<byte>(Encoding.UTF8.GetBytes("にゃんぱすー"));
+                MediaPlayer.Create(this, Resource.Raw.nyanpasu).Start();
+
+                var buff = new ArraySegment<byte>(System.Text.Encoding.UTF8.GetBytes("にゃんぱすー"));
                 await this.ws.SendAsync(buff, WebSocketMessageType.Text, true, CancellationToken.None);
             }
             catch (Exception ex)
@@ -67,7 +70,7 @@ namespace HotCocoa
                         var buff = new ArraySegment<byte>(new byte[256]);
                         var ret = await this.ws.ReceiveAsync(buff, CancellationToken.None);
                         var text = FindViewById<TextView>(Resource.Id.textView);
-                        text.Text = Encoding.UTF8.GetString(buff.Take(ret.Count).ToArray());
+                        text.Text = System.Text.Encoding.UTF8.GetString(buff.Take(ret.Count).ToArray());
                     }
                 }
             }
