@@ -47,6 +47,9 @@ namespace HotCocoa
 			// aapt resource value: 0x7f020000
 			public const int Icon = 2130837504;
 			
+			// aapt resource value: 0x7f020001
+			public const int nonnon = 2130837505;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -62,6 +65,9 @@ namespace HotCocoa
 			
 			// aapt resource value: 0x7f060001
 			public const int MyButton = 2131099649;
+			
+			// aapt resource value: 0x7f060002
+			public const int imageView = 2131099650;
 			
 			// aapt resource value: 0x7f060000
 			public const int textView = 2131099648;
