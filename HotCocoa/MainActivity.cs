@@ -39,7 +39,7 @@ namespace HotCocoa
                 if (this.ws == null) { return; }
                 if (this.ws.State != WebSocketState.Open) { return; }
 
-                var buff = new ArraySegment<byte>(Encoding.UTF8.GetBytes("Xamarin"));
+                var buff = new ArraySegment<byte>(Encoding.UTF8.GetBytes("にゃんぱすー"));
                 await this.ws.SendAsync(buff, WebSocketMessageType.Text, true, CancellationToken.None);
             }
             catch (Exception ex)
