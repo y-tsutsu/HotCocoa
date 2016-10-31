@@ -32,9 +32,10 @@ namespace HotCocoa
             // and attach an event to it
             var button = FindViewById<Button>(Resource.Id.MyButton);
             button.Click += Button_Click;
+            button.Enabled = false;
 
             var text = FindViewById<TextView>(Resource.Id.textView);
-            text.Enabled = false;
+            text.Text = string.Empty;
 
             for (int i = 0; i < this.players.Length; i++)
             {
@@ -78,8 +79,8 @@ namespace HotCocoa
 
         private void Ws_Opened(object sender, EventArgs e)
         {
-            var text = FindViewById<TextView>(Resource.Id.textView);
-            this.RunOnUiThread(() => text.Enabled = true);
+            var button = FindViewById<Button>(Resource.Id.MyButton);
+            this.RunOnUiThread(() => button.Enabled = true);
         }
 
         private void Ws_MessageReceived(object sender, MessageReceivedEventArgs e)
