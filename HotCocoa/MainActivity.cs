@@ -18,7 +18,7 @@ namespace HotCocoa
     {
         private WebSocket ws;
 
-        private MediaPlayer[] players = new MediaPlayer[10];
+        private MediaPlayer[] players;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -37,10 +37,7 @@ namespace HotCocoa
             var text = FindViewById<TextView>(Resource.Id.textView);
             text.Text = string.Empty;
 
-            for (int i = 0; i < this.players.Length; i++)
-            {
-                this.players[i] = MediaPlayer.Create(this, Resource.Raw.nyanpasu);
-            }
+            this.players = Enumerable.Range(0, 10).Select(_ => MediaPlayer.Create(this, Resource.Raw.nyanpasu)).ToArray();
 
             this.ws = new WebSocket("wss://the-des-alizes.herokuapp.com/ws");
             this.ws.Opened += Ws_Opened;
