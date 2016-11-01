@@ -42,7 +42,7 @@ namespace HotCocoa
                 this.players[i] = MediaPlayer.Create(this, Resource.Raw.nyanpasu);
             }
 
-            this.ws = new WebSocket("ws://the-des-alizes.herokuapp.com/ws");
+            this.ws = new WebSocket("wss://the-des-alizes.herokuapp.com/ws");
             this.ws.Opened += Ws_Opened;
             this.ws.MessageReceived += Ws_MessageReceived;
 
