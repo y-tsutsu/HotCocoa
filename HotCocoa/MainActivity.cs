@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using Android.App;
 using Android.Views;
 using Android.Widget;
@@ -10,12 +13,23 @@ using WebSocket4Net;
 
 namespace HotCocoa
 {
+    [DataContract]
+    public class JsonItem
+    {
+        [DataMember(Name = "count")]
+        public int Count { get; set; }
+        [DataMember(Name = "mp3")]
+        public string MP3 { get; set; }
+    }
+
     [Activity(Label = "HotCocoa", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
         private WebSocket ws;
 
         private MediaPlayer[] players;
+
+        private static string HOST_NAME = "the-des-alizes.herokuapp.com";
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -36,7 +50,7 @@ namespace HotCocoa
 
             this.players = Enumerable.Range(0, 10).Select(_ => MediaPlayer.Create(this, Resource.Raw.nyanpasu)).ToArray();
 
-            this.ws = new WebSocket("wss://the-des-alizes.herokuapp.com/ws");
+            this.ws = new WebSocket(string.Format("wss://{0}/ws", MainActivity.HOST_NAME));
             this.ws.Opened += Ws_Opened;
             this.ws.MessageReceived += Ws_MessageReceived;
 
@@ -80,7 +94,12 @@ namespace HotCocoa
         private void Ws_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
             var text = FindViewById<TextView>(Resource.Id.textView);
-            this.RunOnUiThread(() => text.Text = e.Message);
+            using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(e.Message)))
+            {
+                var serializer = new DataContractJsonSerializer(typeof(JsonItem));
+                var item = (JsonItem)serializer.ReadObject(stream);
+                this.RunOnUiThread(() => text.Text = item.Count.ToString());
+            }
         }
     }
 }
