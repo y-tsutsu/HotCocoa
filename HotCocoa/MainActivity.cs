@@ -29,7 +29,7 @@ namespace HotCocoa
 
         private MediaPlayer[] players;
 
-        private static string HOST_NAME = "the-des-alizes.herokuapp.com";
+        private const string HOST_NAME = "the-des-alizes.herokuapp.com";
 
         protected override void OnCreate(Bundle bundle)
         {
